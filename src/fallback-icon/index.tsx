@@ -4,10 +4,10 @@
 const fallbackIcon = (dockerImage : string) => {
 	switch(dockerImage) {
 		case 'theknarf/hello-world':
-			return 'earth';
+			return 'mdi-earth';
 	};
 
-	return 'web';
+	return 'mdi-web';
 }
 
 export default fallbackIcon;
