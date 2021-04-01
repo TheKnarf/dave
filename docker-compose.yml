@@ -17,6 +17,17 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  dave:
+    container_name: dave
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dave.rule=Host(`localhost`)"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
   helloworld:
     image: theknarf/hello-world
     container_name: helloworld
