@@ -1,0 +1,41 @@
+name: Releases
+
+on:
+  release:
+    types:
+      - published
+
+env:
+  IMAGE_NAME: theknarf/dave
+  DOCKERHUB_USERNAME: theknarf
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build . --tag "$IMAGE_NAME:${{ github.event.release.tag_name }}"
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+      - name: Push api image
+        run: docker push $IMAGE_NAME:${{ github.event.release.tag_name }}
+
+      - name: Tag as latest and push
+        run: |
+          docker tag "$IMAGE_NAME:${{ github.event.release.tag_name}}" $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:latest
+
+# This action does not yet work with dockerhub personal access token
+# Issue: https://github.com/peter-evans/dockerhub-description/issues/10
+#      - name: Docker Hub Description
+#        uses: peter-evans/dockerhub-description@v2
+#        with:
+#          username: $DOCKERHUB_USERNAME
+#          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#          repository: $IMAGE_NAME
+#          readme-filepath: ./Readme.md
