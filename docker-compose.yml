@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  reverse-proxy:
+    image: traefik:v2.3
+    command:
+      # Enables the Web UI
+      - "--api.insecure=true"
+      # Enabling docker provider
+      - "--providers.docker"
+      # Do not expose containers unless explicitly told so
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      # Http
+      - 80:80
+      # Web UI
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  helloworld:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld.rule=Host(`helloworld.localhost`)"
+      - "dave.url=//helloworld.localhost"
+    restart: unless-stopped
+
+  helloworld2:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld2.rule=Host(`helloworld2.localhost`)"
+      - "dave.url=//helloworld2.localhost"
+    environment:
+      - title=Hello two.
+      - bgcolor=#4B3F72
+      - textcolor=#EEE5E9
+    restart: unless-stopped
+
+  helloworld3:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld3.rule=Host(`helloworld3.localhost`)"
+      - "dave.url=//helloworld3.localhost"
+    environment:
+      - title=Hello three.
+      - bgcolor=#2D3142
+      - textcolor=#4F5D75
+    restart: unless-stopped
+
