@@ -1,4 +1,5 @@
 import MDX from '@mdx-js/runtime';
+import fallbackIcon from '../fallback-icon';
 
 const App = ({ id, icon, name, relativeSubdomain, status, url }) => {
 	const href = relativeSubdomain || url;
@@ -142,15 +143,6 @@ export async function getServerSideProps(context) {
 				}),
 				{}
 			);
-	}
-
-	const fallbackIcon = (image) => {
-		switch(image) {
-			case 'theknarf/hello-world':
-				return 'earth';
-		};
-
-		return 'web';
 	}
 
 	const appData = (
