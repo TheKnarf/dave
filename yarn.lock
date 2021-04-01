@@ -304,10 +304,20 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
   integrity sha512-CAEbWH7OIur6jEOzaai83jq3FmKmv4PmX1JYfs9IrYcGEVI/lyL1EXJGCj7eFVJ0bg5QR8LMxBlEtA+xKiLpFw==
 
-"@mdi/font@^5.9.55":
-  version "5.9.55"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.9.55.tgz#41acd50b88073ded7095fc3029d8712b6e12f38e"
-  integrity sha512-jswRF6q3eq8NWpWiqct6q+6Fg/I7nUhrxYJfiEM8JJpap0wVJLQdbKtyS65GdlK7S7Ytnx3TTi/bmw+tBhkGmg==
+"@iconify/iconify@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@iconify/iconify/-/iconify-1.0.7.tgz#22e6d384482995738746eeb38b9b76588df41d57"
+  integrity sha512-qCbH1V/Ceg302lrgBiiXCZAyqMAq8KqsHYokCpUvgBH6yYfAmvlSkEEBrmJdHofQvfY/+xaeQcsOOTjW7JakNw==
+
+"@iconify/icons-mdi@^1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.1.13.tgz#5cf40310f28e538ea3c155499c3d72e2d40081a7"
+  integrity sha512-R3EI5eXXrdhlY+x0M4VLJSPWC7Wb252JwZbTsn+6kSXVedQlt7euWZfurI70SUKfjviuVbJqLXWZCAAREjwQoA==
+
+"@iconify/react@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
+  integrity sha512-oxq8IMOq8q3nKGiDHbQPC8FcFuBsKve68JWBo140d5LRnj0bv5TB/FE/y01ZSvEZ7PlI2HIrnb2qivPN8kTDgw==
 
 "@mdx-js/mdx@1.6.22":
   version "1.6.22"

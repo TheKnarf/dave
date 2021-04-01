@@ -22,7 +22,6 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData 
 	}`;
 
 	return <>
-		<script src="https://code.iconify.design/1/1.0.0-rc7/iconify.min.js"></script>
 		<style>{style}</style>
 		<article>
 			<MDX components={{ Apps }} scope={{ appData }}>{mdx}</MDX>
