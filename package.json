@@ -23,7 +23,9 @@
     "@vanilla-extract/css": "^0.1.0",
     "@vanilla-extract/webpack-plugin": "^0.1.0",
     "css-loader": "^5.2.0",
-    "typescript": "^4.2.3"
+    "file-loader": "^6.2.0",
+    "typescript": "^4.2.3",
+    "url-loader": "^4.1.1"
   },
   "resolutions": {
     "webpack": "5.29.0"

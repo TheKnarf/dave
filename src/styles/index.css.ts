@@ -1,21 +1,28 @@
 import { globalStyle } from '@vanilla-extract/css';
 
+globalStyle('html', {
+	margin: 0,
+	padding: 0,
+});
+
 globalStyle('body', {
 	backgroundColor: 'var(--bg-color)',
 	color: 'var(--text-color)',
-	fontFamily: 'sans-serif',
+	fontFamily: 'serif',
 	fontSize: 'max(2vh, 16px)',
+	margin: 0,
+	padding: 0,
 });
 
 globalStyle('article', {
-	maxWidth: '60vw',
-	marginLeft: 'auto',
-	marginRight: 'auto',
-	marginTop: '15vh',
+	marginLeft: '15vw',
+	marginRight: '20vw',
+	marginTop: 'min(15vh, 15vw)',
 });
 
 globalStyle('article h1, article h2, article h3, article h4, article h5, article h6', {
-	textTransform: 'uppercase',
+	fontFamily: '"Inter", sans-serif',
+	fontWeight: 400,
 });
 
 globalStyle('article h1', {

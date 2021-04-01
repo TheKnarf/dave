@@ -5,6 +5,7 @@ import fallbackIcon from '../fallback-icon';
 import { AppProps } from '../components/app';
 import Apps from '../components/apps';
 import '../styles';
+import 'inter-ui/Inter (web)/inter.css';
 
 interface Props {
 	bgcolor: string;
