@@ -19,6 +19,7 @@ services:
 
   helloworld:
     image: theknarf/hello-world
+    container_name: helloworld
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld.rule=Host(`helloworld.localhost`)"
@@ -27,6 +28,7 @@ services:
 
   helloworld2:
     image: theknarf/hello-world
+    container_name: helloworld2
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld2.rule=Host(`helloworld2.localhost`)"
@@ -43,8 +45,46 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld3.rule=Host(`helloworld3.localhost`)"
       - "dave.url=//helloworld3.localhost"
+      - "dave.name=Hello World 3"
     environment:
       - title=Hello three.
+      - bgcolor=#2D3142
+      - textcolor=#4F5D75
+    restart: unless-stopped
+
+  helloworld4:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld4.rule=Host(`helloworld4.localhost`)"
+      - "dave.url=//helloworld4.localhost"
+      - "dave.name=Hello World 4"
+    environment:
+      - title=Hello 4.
+    restart: unless-stopped
+
+  helloworld5:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld5.rule=Host(`helloworld5.localhost`)"
+      - "dave.url=//helloworld5.localhost"
+      - "dave.name=Hello World 5"
+    environment:
+      - title=Hello 5.
+      - bgcolor=#4B3F72
+      - textcolor=#EEE5E9
+    restart: unless-stopped
+
+  helloworld6:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld6.rule=Host(`helloworld6.localhost`)"
+      - "dave.url=//helloworld6.localhost"
+      - "dave.name=Hello World 6"
+    environment:
+      - title=Hello 6.
       - bgcolor=#2D3142
       - textcolor=#4F5D75
     restart: unless-stopped

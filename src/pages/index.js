@@ -22,9 +22,6 @@ const Apps = ({ data = [] }) => {
 			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 			gap: 1em;
 		}
-
-		.app {
-		}
 		
 		.app > a {
 			display: flex;
@@ -79,16 +76,19 @@ const Home = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
 			font-size: max(2vh, 16px);
 		}
 		article {
-			max-width: 80vw;
+			max-width: 60vw;
 			margin-left: auto;
 			margin-right: auto;
-			margin-top: 10vh;
+			margin-top: 15vh;
+		}
+		article h1, article h2, article h3, article h4, article h5, article h6 {
+			text-transform: uppercase;
 		}
 		article h1 {
-			font-size: 2em;
+			font-size: 1.9em;
 		}
 		article h2 {
-			font-size: 1.5em;
+			font-size: 1.4em;
 		}
 `;
 
@@ -145,9 +145,10 @@ export async function getServerSideProps(context) {
 	}
 
 	const fallbackIcon = (image) => {
-		/*switch(image) {
-
-		};*/
+		switch(image) {
+			case 'theknarf/hello-world':
+				return 'earth';
+		};
 
 		return 'web';
 	}
@@ -167,12 +168,13 @@ export async function getServerSideProps(context) {
 			status: Status,
 		};
 	})
-	.filter(({ url, relativeSubdomain }) => url !== '' || relativeSubdomain !== '');
+	.filter(({ url, relativeSubdomain }) => url !== '' || relativeSubdomain !== '')
+	.sort((first, second) => first.name.localeCompare(second.name));
 
 	const defaultMdx = `
-# Hello world
+# Dave
 
-This is a test
+_Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 
 ## Apps
 
