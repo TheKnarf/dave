@@ -1,91 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
+import { AppProps } from '../components/app/index.tsx';
+import Apps from '../components/apps/index.tsx';
+import '../styles/index.css.ts';
 
-interface AppProps {
-	id: string;
-	icon: string;
-	name: string;
-	relativeSubdomain?: string;
-	status: string;
-	url?: string;
-}
-
-const App : React.FC<AppProps> = ({ id, icon, name, relativeSubdomain, status, url }) => {
-	const [href, setHref] = useState(url);
-
-	useEffect(() => {
-		if(relativeSubdomain && typeof window !== 'undefined') {
-			setHref(`//${relativeSubdomain}.${window.location.host}/`);
-		}
-	}, [relativeSubdomain]);
-
-	return <div className="app">
-		<a href={href}>
-			<span className="iconify icon" data-icon={`mdi-${icon}`}></span>
-			<div className="info">
-				<div className="name">{name}</div>
-				<div className="status">{status}</div>
-				<div className="url">{href}</div>
-			</div>
-		</a>
-	</div>;
-}
-
-interface AppsProps {
-	data: AppProps[];
-}
-
-const Apps : React.FC<AppsProps> = ({ data = [] }) => {
-	const style = `
-		.apps {
-			display: grid;	
-			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-			gap: 1em;
-		}
-		
-		.app > a {
-			display: flex;
-			flex-direction: row;
-			text-decoration: none;
-			color: inherit;
-		}
-
-		.app .icon {
-			height: 3em;
-			width: 3em;
-			margin-right: 1em;
-		}
-		
-		.app .status, .app .url {
-			font-size: 0.8em;
-			font-style: italic;
-		}
-
-		.app .url {
-			color: var(--accent-color);
-		}
-		
-		.app:hover {
-			text-decoration: underline;
-		}
-
-`;
-
-	return <>
-		<style>{style}</style>
-		<div className="apps">
-		{
-			data.map(app => (
-				<App key={app.id} {...app} />
-			))
-		}
-		</div>
-	</>;
-}
-
-interface HomeProps {
+interface Props {
 	bgcolor: string;
 	textcolor: string;
 	accentcolor: string;
@@ -93,34 +14,12 @@ interface HomeProps {
 	appData: AppProps[];
 };
 
-const Home : React.FC<HomeProps> = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
-	const style = `
-		:root {
-			--accent-color: ${accentcolor};
-		}
-
-		body {
-			background-color: ${bgcolor};
-			color: ${textcolor};
-			font-family: sans-serif;
-			font-size: max(2vh, 16px);
-		}
-		article {
-			max-width: 60vw;
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 15vh;
-		}
-		article h1, article h2, article h3, article h4, article h5, article h6 {
-			text-transform: uppercase;
-		}
-		article h1 {
-			font-size: 1.9em;
-		}
-		article h2 {
-			font-size: 1.4em;
-		}
-`;
+const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
+	const style = `:root {
+		--bg-color: ${bgcolor};
+		--text-color: ${textcolor};
+		--accent-color: ${accentcolor};
+	}`;
 
 	return <>
 		<script src="https://code.iconify.design/1/1.0.0-rc7/iconify.min.js"></script>

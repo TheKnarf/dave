@@ -5,7 +5,7 @@
     "start": "next start",
     "dev": "next dev",
     "build": "next build",
-		"lint:types": "tsc --noEmit"
+    "lint:types": "tsc --noEmit"
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",
@@ -19,6 +19,9 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.3",
+    "@vanilla-extract/babel-plugin": "^0.1.0",
+    "@vanilla-extract/css": "^0.1.0",
+    "@vanilla-extract/webpack-plugin": "^0.1.0",
     "typescript": "^4.2.3"
   },
   "resolutions": {
