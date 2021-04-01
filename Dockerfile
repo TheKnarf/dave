@@ -1,7 +1,7 @@
 FROM node:14
 
 WORKDIR /app
-COPY package.json yarn.lock next.config.js src /app/
+COPY . /app/
 
 RUN yarn
 RUN yarn next build

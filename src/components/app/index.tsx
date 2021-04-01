@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { className, appIcon, appStatus, appUrl, appA } from './style.css.ts';
+import { className, appIcon, appStatus, appUrl, appA } from './style.css';
 
 export interface AppProps {
 	id: string;

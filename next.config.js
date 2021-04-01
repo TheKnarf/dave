@@ -12,11 +12,9 @@ module.exports = {
 
 		// Fixes npm packages that depend on `fs` module
 		if (!isServer) {
-			config.resolve = {
-				fallback: {
-					fs:   false,
-					path: require.resolve('path-browserify'),
-				}
+			config.resolve.fallback = {
+				fs:   false,
+				path: require.resolve('path-browserify'),
 			};
 		}
 
@@ -55,6 +53,8 @@ module.exports = {
 				})
 			);
 		}
+
+		config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx', '.css', '.css.ts'];
 		// ------------------------------
 
 		return config;
