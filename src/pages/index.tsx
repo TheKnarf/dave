@@ -1,8 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
 
-const App = ({ id, icon, name, relativeSubdomain, status, url }) => {
+interface AppProps {
+	id: string;
+	icon: string;
+	name: string;
+	relativeSubdomain?: string;
+	status: string;
+	url?: string;
+}
+
+const App : React.FC<AppProps> = ({ id, icon, name, relativeSubdomain, status, url }) => {
 	const [href, setHref] = useState(url);
 
 	useEffect(() => {
@@ -23,7 +33,11 @@ const App = ({ id, icon, name, relativeSubdomain, status, url }) => {
 	</div>;
 }
 
-const Apps = ({ data = [] }) => {
+interface AppsProps {
+	data: AppProps[];
+}
+
+const Apps : React.FC<AppsProps> = ({ data = [] }) => {
 	const style = `
 		.apps {
 			display: grid;	
@@ -63,15 +77,23 @@ const Apps = ({ data = [] }) => {
 		<style>{style}</style>
 		<div className="apps">
 		{
-			data.map(({ id, ...app}) => (
-				<App key={id} {...app} />
+			data.map(app => (
+				<App key={app.id} {...app} />
 			))
 		}
 		</div>
 	</>;
 }
 
-const Home = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
+interface HomeProps {
+	bgcolor: string;
+	textcolor: string;
+	accentcolor: string;
+	mdx: string;
+	appData: AppProps[];
+};
+
+const Home : React.FC<HomeProps> = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
 	const style = `
 		:root {
 			--accent-color: ${accentcolor};
@@ -111,11 +133,11 @@ const Home = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
 
 export default Home;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps : GetServerSideProps = async (context) => {
 	const {Docker} = require('node-docker-api');
 	const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 
-	const fetch = (path, callOverride) => {
+	const fetch = (path, callOverride = {}) => {
 		const call = {
 			path,
 			method: 'GET',
@@ -135,7 +157,7 @@ export async function getServerSideProps(context) {
 		});
 	}
 
-	const processLabels = (labels) => {
+	const processLabels = (labels : { [key: string]: string }) => {
 		return Object
 			.keys(labels)
 			.filter(key => key.toLowerCase().startsWith('dave.'))
@@ -153,10 +175,10 @@ export async function getServerSideProps(context) {
 	}
 
 	const appData = (
-		await fetch('/containers/json')
+		await fetch('/containers/json') as any
 	)
 	.map( ({ Id, Image, Labels, Names, Status }) => {
-		const labels = processLabels(Labels);
+		const labels = processLabels(Labels) as any;
 
 		return {
 			id: Id,

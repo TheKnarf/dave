@@ -4,7 +4,8 @@
   "scripts": {
     "start": "next start",
     "dev": "next dev",
-    "build": "next build"
+    "build": "next build",
+		"lint:types": "tsc --noEmit"
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",
