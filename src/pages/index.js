@@ -1,8 +1,15 @@
+import { useState, useEffect } from 'react';
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
 
 const App = ({ id, icon, name, relativeSubdomain, status, url }) => {
-	const href = relativeSubdomain || url;
+	const [href, setHref] = useState(url);
+
+	useEffect(() => {
+		if(relativeSubdomain && typeof window !== 'undefined') {
+			setHref(`//${relativeSubdomain}.${window.location.host}/`);
+		}
+	}, [relativeSubdomain]);
 
 	return <div className="app">
 		<a href={href}>
@@ -10,7 +17,7 @@ const App = ({ id, icon, name, relativeSubdomain, status, url }) => {
 			<div className="info">
 				<div className="name">{name}</div>
 				<div className="status">{status}</div>
-				<div className="url">{url}</div>
+				<div className="url">{href}</div>
 			</div>
 		</a>
 	</div>;

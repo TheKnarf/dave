@@ -34,7 +34,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld.rule=Host(`helloworld.localhost`)"
-      - "dave.url=//helloworld.localhost"
+      - "dave.relativeSubdomain=helloworld"
     restart: unless-stopped
 
   helloworld2:
@@ -43,7 +43,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld2.rule=Host(`helloworld2.localhost`)"
-      - "dave.url=//helloworld2.localhost"
+      - "dave.relativeSubdomain=helloworld2"
     environment:
       - title=Hello two.
       - bgcolor=#4B3F72
@@ -55,7 +55,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.helloworld3.rule=Host(`helloworld3.localhost`)"
-      - "dave.url=//helloworld3.localhost"
+      - "dave.relativeSubdomain=helloworld3"
       - "dave.name=Hello World 3"
     environment:
       - title=Hello three.
