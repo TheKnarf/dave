@@ -1,6 +1,6 @@
 import React from 'react';
-import App, { AppProps } from '../app/index.tsx';
-import { className } from './style.css.ts';
+import App, { AppProps } from '../app';
+import { className } from './style.css';
 
 interface Props {
 	data: AppProps[];

@@ -2,9 +2,9 @@ import React from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
-import { AppProps } from '../components/app/index.tsx';
-import Apps from '../components/apps/index.tsx';
-import '../styles/index.css.ts';
+import { AppProps } from '../components/app';
+import Apps from '../components/apps';
+import '../styles';
 
 interface Props {
 	bgcolor: string;
