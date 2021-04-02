@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
@@ -24,27 +24,24 @@ const makeStyle = (bgcolor : string, textcolor : string, accentcolor : string) =
 };
 
 const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
-	const [ style, setStyle ] = useState(makeStyle(bgcolor, textcolor, accentcolor));
-
-	useEffect(() => {
+	const style = useMemo(() => {
 		if(typeof window !== 'undefined') {
-			const onHashChange = () => {
-				const match = window.location.hash.match(/^\#([0-9a-f]{3,6})\-([0-9a-f]{3,6})\-([0-9a-f]{3,6})$/i);
-				if(match !== null) {
-					setStyle(makeStyle(
-						'#' + match[1],
-						'#' + match[2],
-						'#' + match[3],
-					));
-				}
+			const match = window.location.hash.match(/^\#([0-9a-f]{3,6})\-([0-9a-f]{3,6})\-([0-9a-f]{3,6})$/i);
+			if(match !== null) {
+				return makeStyle(
+					'#' + match[1],
+					'#' + match[2],
+					'#' + match[3],
+				);
 			}
-
-			window.addEventListener("hashchange", onHashChange);
-			onHashChange();
-
-			return () => window.removeEventListener("hashchange", onHashChange);
 		}
-	}, []);
+
+		return makeStyle(
+			bgcolor,
+			textcolor,
+			accentcolor
+		);
+	}, [ (typeof window == 'undefined' ? { location: { hash: '' }} : window ).location.hash ])
 
 	return <>
 		<style>{style}</style>
