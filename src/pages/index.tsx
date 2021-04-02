@@ -28,7 +28,7 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData 
 
 	useEffect(() => {
 		if(typeof window !== 'undefined') {
-			function onHashChange() {
+			const onHashChange = () => {
 				const match = window.location.hash.match(/^\#([0-9a-f]{3,6})\-([0-9a-f]{3,6})\-([0-9a-f]{3,6})$/i);
 				if(match !== null) {
 					setStyle(makeStyle(
