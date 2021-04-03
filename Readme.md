@@ -26,3 +26,5 @@ Then for each service you want to add to the apps list of `dave` add the followi
       - "dave.name=Hello World"
     restart: unless-stopped
 ```
+
+See full `docker-compose` examples in the [examples folder](./examples).

@@ -1,0 +1,100 @@
+version: "3.8"
+services:
+  reverse-proxy:
+    image: traefik:v2.3
+    command:
+      # Enables the Web UI
+      - "--api.insecure=true"
+      # Enabling docker provider
+      - "--providers.docker"
+      # Do not expose containers unless explicitly told so
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      # Http
+      - 80:80
+      # Web UI
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  dave:
+    image: theknarf/dave
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dave.rule=Host(`localhost`)"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  helloworld:
+    image: theknarf/hello-world
+    container_name: helloworld
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld.rule=Host(`helloworld.localhost`)"
+      - "dave.relativeSubdomain=helloworld"
+    restart: unless-stopped
+
+  helloworld2:
+    image: theknarf/hello-world
+    container_name: helloworld2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld2.rule=Host(`helloworld2.localhost`)"
+      - "dave.relativeSubdomain=helloworld2"
+    environment:
+      - title=Hello two.
+      - bgcolor=#4B3F72
+      - textcolor=#EEE5E9
+    restart: unless-stopped
+
+  helloworld3:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld3.rule=Host(`helloworld3.localhost`)"
+      - "dave.relativeSubdomain=helloworld3"
+      - "dave.name=Hello World 3"
+    environment:
+      - title=Hello three.
+      - bgcolor=#2D3142
+      - textcolor=#4F5D75
+    restart: unless-stopped
+
+  helloworld4:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld4.rule=Host(`helloworld4.localhost`)"
+      - "dave.url=//helloworld4.localhost"
+      - "dave.name=Hello World 4"
+    environment:
+      - title=Hello 4.
+    restart: unless-stopped
+
+  helloworld5:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld5.rule=Host(`helloworld5.localhost`)"
+      - "dave.url=//helloworld5.localhost"
+      - "dave.name=Hello World 5"
+    environment:
+      - title=Hello 5.
+      - bgcolor=#4B3F72
+      - textcolor=#EEE5E9
+    restart: unless-stopped
+
+  helloworld6:
+    image: theknarf/hello-world
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.helloworld6.rule=Host(`helloworld6.localhost`)"
+      - "dave.url=//helloworld6.localhost"
+      - "dave.name=Hello World 6"
+    environment:
+      - title=Hello 6.
+      - bgcolor=#2D3142
+      - textcolor=#4F5D75
+    restart: unless-stopped
+
