@@ -16,5 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: Tests
+        run: yarn test
+
       - name: Build Docker image
         run: docker build . --tag $IMAGE_NAME
