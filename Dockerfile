@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . /app/
 
 RUN yarn
-RUN yarn next build
+RUN NEXT_TELEMETRY_DISABLED=1 yarn next build
 
 EXPOSE 80
 
