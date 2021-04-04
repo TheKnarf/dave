@@ -53,11 +53,19 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData 
 
 export default Home;
 
+interface Container {
+	Id: string;
+	Image: string;
+	Labels: { [key: string]: string};
+	Names: string[];
+	Status: string;
+}
+
 export const getServerSideProps : GetServerSideProps = async (context) => {
 	const {Docker} = require('node-docker-api');
 	const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 
-	const fetch = (path, callOverride = {}) => {
+	const fetch = (path : string, callOverride = {}) => {
 		const call = {
 			path,
 			method: 'GET',
@@ -70,7 +78,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 		};
 
 		return new Promise((resolve, reject) => {
-			docker.modem.dial(call, (err, data) => {
+			docker.modem.dial(call, (err : any, data : any) => {
 				if (err) return reject(err);
 				resolve(data);
 			});
@@ -95,9 +103,9 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 	}
 
 	const appData = (
-		await fetch('/containers/json') as any
+		await fetch('/containers/json') as Container[]
 	)
-	.map( ({ Id, Image, Labels, Names, Status }) => {
+	.map( ({ Id, Image, Labels, Names, Status } : Container ) => {
 		const labels = processLabels(Labels) as any;
 
 		return {
