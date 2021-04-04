@@ -85,7 +85,12 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 		});
 	}
 
-	const processLabels = (labels : { [key: string]: string }) => {
+	const processLabels = (labels : { [key: string]: string }) : {
+		name?: string;
+		url?: string;
+		relativeSubdomain?: string;
+		icon?: string;
+	} => {
 		return Object
 			.keys(labels)
 			.filter(key => key.toLowerCase().startsWith('dave.'))
@@ -106,7 +111,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 		await fetch('/containers/json') as Container[]
 	)
 	.map( ({ Id, Image, Labels, Names, Status } : Container ) => {
-		const labels = processLabels(Labels) as any;
+		const labels = processLabels(Labels);
 
 		return {
 			id: Id,
