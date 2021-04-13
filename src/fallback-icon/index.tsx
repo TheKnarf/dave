@@ -1,7 +1,11 @@
 /**
  *	Fallback icon - finds a fallback icon based on Docker image name
  */
-const fallbackIcon = (dockerImage : string|undefined = undefined) => {
+const fallbackIcon = (dockerImage : string|undefined = "") => {
+	if(dockerImage.startsWith('ghcr.io/')) {
+		dockerImage = dockerImage.substr('ghcr.io/'.length);
+	}
+
 	switch(dockerImage) {
 		case 'theknarf/hello-world':
 			return 'mdi-earth';
