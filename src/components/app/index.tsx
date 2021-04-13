@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { className, appIcon, appStatus, appUrl, appA } from './style.css';
+import { className, appIconWrapper, appIcon, appStatus, appUrl, appA } from './style.css';
 import Icon from '../icon';
 
 export interface AppProps {
@@ -23,7 +23,9 @@ const App : React.FC<AppProps> = ({ id, icon, name, relativeSubdomain, status, u
 
 	return <div className={className}>
 		<a href={href} className={appA}>
-			<Icon icon={icon} className={appIcon} />
+			<div className={appIconWrapper}>
+				<Icon icon={icon} className={appIcon} />
+			</div>
 			<div>
 				<div>{name}</div>
 				<div className={appStatus}>{status}</div>

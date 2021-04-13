@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 export const className = style({
+	display: 'flex',
 	':hover': {
 		textDecoration: 'underline',
 	},
@@ -24,8 +25,13 @@ export const appStatus = style({
 	fontStyle: 'italic',
 });
 
-export const appIcon = style({
+export const appIconWrapper = style({
 	height: '3em',
 	width: '3em',
 	marginRight: '1em',
+});
+
+export const appIcon = style({
+	height: '100%',
+	width: '100%',
 });
