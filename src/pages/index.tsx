@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
-import { AppProps } from '../components/app';
-import Apps from '../components/apps';
+import App, { AppProps } from '../components/app';
+import Grid from '../components/grid';
 import '../styles';
 import 'inter-ui/Inter (web)/inter.css';
 
@@ -46,7 +46,7 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData 
 	return <>
 		<style>{style}</style>
 		<article>
-			<MDX components={{ Apps }} scope={{ appData }}>{mdx}</MDX>
+			<MDX components={{ Grid, App }} scope={{ appData }}>{mdx}</MDX>
 		</article>
 	</>
 };
@@ -132,7 +132,9 @@ _Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 
 ## Apps
 
-<Apps data={appData} />
+<Grid>
+{ appData.map(app => <App key={app.id} {...app} />) }
+</Grid>
 `;
 
 	return {
