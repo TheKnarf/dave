@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { className, appIconWrapper, appIcon, appStatus, appUrl, appA } from './style.css';
-import Icon from '../icon';
+import { Icon } from '@iconify/react-with-api';
 
 export interface AppProps {
 	id: string;
