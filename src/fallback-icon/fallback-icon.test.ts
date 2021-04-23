@@ -1,4 +1,4 @@
-import fallbackIcon from '../src/fallback-icon';
+import fallbackIcon from '.';
 
 const containerWithKnownDefault = 'theknarf/hello-world';
 
