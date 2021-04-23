@@ -39,6 +39,7 @@ bgcolor|#EDEEC0|Background color
 textcolor|#433E0E|Text color
 accentcolor|#553555|Accent color, used for url's
 mdx||The markdown used for the dashboard
+forceHttps|false|Redirect to `https`. Possible values `all`, `dave`, `false`.
 
 Labels you can set on containers you want to show on the dashboard:
 

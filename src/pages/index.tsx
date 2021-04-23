@@ -4,6 +4,7 @@ import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
 import App, { AppProps } from '../components/app';
 import Grid from '../components/grid';
+import useForceHttps from '../force-https';
 import '../styles';
 import 'inter-ui/Inter (web)/inter.css';
 
@@ -13,6 +14,7 @@ interface Props {
 	accentcolor: string;
 	mdx: string;
 	appData: AppProps[];
+	forceHttps: string | boolean;
 };
 
 const makeStyle = (bgcolor : string, textcolor : string, accentcolor : string) => {
@@ -23,7 +25,9 @@ const makeStyle = (bgcolor : string, textcolor : string, accentcolor : string) =
 	}`;
 };
 
-const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData }) => {
+const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData, forceHttps }) => {
+	useForceHttps(forceHttps);
+
 	const style = useMemo(() => {
 		if(typeof window !== 'undefined') {
 			const match = window.location.hash.match(/^\#([0-9a-f]{3,6})\-([0-9a-f]{3,6})\-([0-9a-f]{3,6})$/i);
@@ -143,6 +147,7 @@ _Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 			textcolor: process.env.textcolor || "#433E0E",
 			accentcolor: process.env.accentcolor || "#553555",
 			mdx: process.env.mdx || defaultMdx,
+			forceHttps: process.env.forceHttps || false,
 			appData,
 		}
 	}
