@@ -1,21 +1,12 @@
 import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
-import fallbackIcon from '../fallback-icon';
 import App from '../components/app';
 import Grid from '../components/grid';
 import useForceHttps, { ForceHttpsStatus, replaceUrlWithHttps } from '../force-https';
+import { getContainersWithLabels, AppProps } from '../docker';
 import '../styles';
 import 'inter-ui/Inter (web)/inter.css';
-
-interface AppProps {
-	id: string;
-	icon: string;
-	name: string;
-	status: string;
-	url?: string;
-	relativeSubdomain?: string;
-};
 
 interface Props {
 	bgcolor: string;
@@ -85,77 +76,8 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData,
 
 export default Home;
 
-interface Container {
-	Id: string;
-	Image: string;
-	Labels: { [key: string]: string};
-	Names: string[];
-	Status: string;
-}
-
 export const getServerSideProps : GetServerSideProps = async (context) => {
-	const {Docker} = require('node-docker-api');
-	const docker = new Docker({ socketPath: '/var/run/docker.sock' });
-
-	const fetch = (path : string, callOverride = {}) => {
-		const call = {
-			path,
-			method: 'GET',
-			statusCodes: {
-				200: true,
-				204: true,
-				500: 'server error'
-			},
-			...callOverride
-		};
-
-		return new Promise((resolve, reject) => {
-			docker.modem.dial(call, (err : any, data : any) => {
-				if (err) return reject(err);
-				resolve(data);
-			});
-		});
-	}
-
-	const processLabels = (labels : { [key: string]: string }) : {
-		name?: string;
-		url?: string;
-		relativeSubdomain?: string;
-		icon?: string;
-	} => {
-		return Object
-			.keys(labels)
-			.filter(key => key.toLowerCase().startsWith('dave.'))
-			.map(key => ({
-				key: key.substring(5), // Removes 'dave.'
-				value: labels[key],
-			}))
-			.reduce(
-				(acc, {key, value }) => ({
-					...acc,
-					[key]: value,
-				}),
-				{}
-			);
-	}
-
-	const appData = (
-		await fetch('/containers/json') as Container[]
-	)
-	.map( ({ Id, Image, Labels, Names, Status } : Container ) => {
-		const labels = processLabels(Labels);
-
-		return {
-			id: Id,
-			name: labels.name || Names[0].substring(1),
-			url: labels.url || '',
-			relativeSubdomain: labels.relativeSubdomain || '',
-			icon: labels.icon || fallbackIcon(Image),
-			status: Status,
-		};
-	})
-	.filter(({ url, relativeSubdomain }) => url !== '' || relativeSubdomain !== '')
-	.sort((first, second) => first.name.localeCompare(second.name));
+	const appData = await getContainersWithLabels();
 
 	const defaultMdx = `
 # Dave
