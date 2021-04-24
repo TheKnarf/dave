@@ -2,11 +2,20 @@ import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
 import fallbackIcon from '../fallback-icon';
-import App, { AppProps } from '../components/app';
+import App from '../components/app';
 import Grid from '../components/grid';
-import useForceHttps from '../force-https';
+import useForceHttps, { ForceHttpsStatus, replaceUrlWithHttps } from '../force-https';
 import '../styles';
 import 'inter-ui/Inter (web)/inter.css';
+
+interface AppProps {
+	id: string;
+	icon: string;
+	name: string;
+	status: string;
+	url?: string;
+	relativeSubdomain?: string;
+};
 
 interface Props {
 	bgcolor: string;
@@ -26,7 +35,7 @@ const makeStyle = (bgcolor : string, textcolor : string, accentcolor : string) =
 };
 
 const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData, forceHttps }) => {
-	useForceHttps(forceHttps);
+	const httpStatus = useForceHttps(forceHttps);
 
 	const style = useMemo(() => {
 		if(typeof window !== 'undefined') {
@@ -47,10 +56,29 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData,
 		);
 	}, [ (typeof window == 'undefined' ? { location: { hash: '' }} : window ).location.hash ])
 
+	const apps = useMemo(() => {
+		return (appData||[]).map(({
+			relativeSubdomain,
+			url,
+			...app
+		}) => {
+			const href = (relativeSubdomain && typeof window !== 'undefined')
+				? `//${relativeSubdomain}.${window.location.host}/`
+				: (url || "");
+
+			if(httpStatus === ForceHttpsStatus.All) {
+				return { ...app, href: replaceUrlWithHttps(href) };
+			}
+
+			return { ...app, href };
+		});
+	}, [appData, httpStatus]);
+
+
 	return <>
 		<style>{style}</style>
 		<article>
-			<MDX components={{ Grid, App }} scope={{ appData }}>{mdx}</MDX>
+			<MDX components={{ Grid, App }} scope={{ apps }}>{mdx}</MDX>
 		</article>
 	</>
 };
@@ -137,7 +165,7 @@ _Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 ## Apps
 
 <Grid>
-{ appData.map(app => <App key={app.id} {...app} />) }
+{ apps.map(app => <App key={app.id} {...app} />) }
 </Grid>
 `;
 

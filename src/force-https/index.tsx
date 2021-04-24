@@ -28,6 +28,15 @@ export const checkStatus = (status : string | boolean) : ForceHttpsStatus => {
 	}
 }
 
+export const replaceUrlWithHttps = (url : string) : string => {
+	const match = url.match(/^(http\:|https\:)?(\/\/)?(?<url>.*)$/);
+	if(match && match.groups) {
+		return `https://${match.groups.url}`;
+	}
+
+	return url;
+}
+
 /*
  * Redirects browser to https if it's not https and the status indicates it should be
  */
@@ -46,6 +55,8 @@ const usePossiblyRedirect = ( status : string | boolean) => {
 			window.location.replace(`https:${location.href.substring(location.protocol.length)}`);
 		}
 	}, [httpsStatus]);
+
+	return httpsStatus;
 }
 
 export default usePossiblyRedirect;

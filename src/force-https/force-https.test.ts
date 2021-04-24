@@ -1,4 +1,4 @@
-import useForceHttps, { checkStatus, ForceHttpsStatus } from '.';
+import useForceHttps, { checkStatus, ForceHttpsStatus, replaceUrlWithHttps } from '.';
 import { renderHook, act } from '@testing-library/react-hooks/dom'
 import { URL } from 'whatwg-url';
 
@@ -59,6 +59,16 @@ describe('force-https', () => {
 			expect(checkStatus("all")).toBe(ForceHttpsStatus.All);
 			expect(checkStatus("All")).toBe(ForceHttpsStatus.All);
 			expect(checkStatus("ALL")).toBe(ForceHttpsStatus.All);
+		});
+	});
+
+	describe('replaceUrlWithHttps', () => {
+		it('Should replace url with a https', () =>{
+			expect(replaceUrlWithHttps('//example.com')).toBe('https://example.com');
+			expect(replaceUrlWithHttps('http://example.com')).toBe('https://example.com');
+			expect(replaceUrlWithHttps('https://example.com')).toBe('https://example.com');
+			expect(replaceUrlWithHttps('example.com')).toBe('https://example.com');
+			expect(replaceUrlWithHttps('www.example.com')).toBe('https://www.example.com');
 		});
 	});
 });
