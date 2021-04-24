@@ -1,4 +1,12 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { createGlobalTheme, globalStyle } from '@vanilla-extract/css';
+
+export const themeVars = createGlobalTheme(':root', {
+	color: {
+		background: "#EDEEC0",
+		text: "#433E0E",
+		accent: "#553555",
+	},
+});
 
 globalStyle('html', {
 	margin: 0,
@@ -6,8 +14,8 @@ globalStyle('html', {
 });
 
 globalStyle('body', {
-	backgroundColor: 'var(--bg-color)',
-	color: 'var(--text-color)',
+	backgroundColor: themeVars.color.background,
+	color: themeVars.color.text,
 	fontFamily: 'serif',
 	fontSize: 'max(2vh, 16px)',
 	margin: 0,

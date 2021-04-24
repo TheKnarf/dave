@@ -26,6 +26,7 @@
     "@types/whatwg-url": "^8.2.0",
     "@vanilla-extract/babel-plugin": "^0.1.0",
     "@vanilla-extract/css": "^0.1.0",
+    "@vanilla-extract/dynamic": "^0.1.0",
     "@vanilla-extract/webpack-plugin": "^0.1.0",
     "css-loader": "^5.2.0",
     "file-loader": "^6.2.0",

@@ -926,6 +926,18 @@
     csstype "^3.0.7"
     dedent "^0.7.0"
 
+"@vanilla-extract/dynamic@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/dynamic/-/dynamic-0.1.0.tgz#588d2f9d31eb85374304250b3196b0e6f0beb59e"
+  integrity sha512-4oBUis7ApD4A1k1VnZGTfpVk7gtUTe38qSD7stmYJK5Si9/x8h8xbTEN48Aoul/lZswBctSc6AieZ8IjrMjrjQ==
+  dependencies:
+    "@vanilla-extract/private" "^0.1.0"
+
+"@vanilla-extract/private@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/private/-/private-0.1.0.tgz#f725cd43977ff8adb80c9bec3ce1e7bcd24d2401"
+  integrity sha512-it5HWDWsjHBWZhEcBwl8Fvcp5qG1NiUK8uKsPV9j/+F6NZ/2ZcgIqwOEjZqmsj0NtJOa+sJZwkZT/5yYDU02rA==
+
 "@vanilla-extract/webpack-plugin@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@vanilla-extract/webpack-plugin/-/webpack-plugin-0.1.0.tgz#d0d09db7c32fa4024ee5067d62cec2460c408f45"

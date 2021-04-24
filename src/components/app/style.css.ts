@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { themeVars } from '../../styles/index.css';
 
 export const className = style({
 	display: 'flex',
@@ -15,7 +16,7 @@ export const appA = style({
 });
 
 export const appUrl = style({
-	color: 'var(--accent-color)',
+	color: themeVars.color.accent,
 	fontSize: '0.8em',
 	fontStyle: 'italic',
 });

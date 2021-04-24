@@ -5,24 +5,29 @@ import App from '../components/app';
 import Grid from '../components/grid';
 import useForceHttps, { ForceHttpsStatus, replaceUrlWithHttps } from '../force-https';
 import { getContainersWithLabels, AppProps } from '../docker';
-import '../styles';
+import { themeVars } from '../styles/index.css';
 import 'inter-ui/Inter (web)/inter.css';
+import { createInlineTheme } from '@vanilla-extract/dynamic';
 
 interface Props {
-	bgcolor: string;
-	textcolor: string;
-	accentcolor: string;
+	bgcolor: string | false;
+	textcolor: string | false;
+	accentcolor: string | false;
 	mdx: string;
 	appData: AppProps[];
 	forceHttps: string | boolean;
 };
 
-const makeStyle = (bgcolor : string, textcolor : string, accentcolor : string) => {
-	return `:root {
-		--bg-color: ${bgcolor};
-		--text-color: ${textcolor};
-		--accent-color: ${accentcolor};
-	}`;
+const makeStyle = (bgcolor: string | false, textcolor: string | false, accentcolor: string | false) => {
+	const color : any = {};
+
+	if(bgcolor) color.background = bgcolor;
+	if(textcolor) color.text = textcolor;
+	if(accentcolor) color.accent = accentcolor;
+
+	const customTheme = createInlineTheme(themeVars, { color });
+
+	return `:root { ${customTheme.toString()} }`;
 };
 
 const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData, forceHttps }) => {
@@ -40,11 +45,7 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData,
 			}
 		}
 
-		return makeStyle(
-			bgcolor,
-			textcolor,
-			accentcolor
-		);
+		return makeStyle(bgcolor, textcolor, accentcolor);
 	}, [ (typeof window == 'undefined' ? { location: { hash: '' }} : window ).location.hash ])
 
 	const apps = useMemo(() => {
@@ -64,7 +65,6 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData,
 			return { ...app, href };
 		});
 	}, [appData, httpStatus]);
-
 
 	return <>
 		<style>{style}</style>
@@ -93,12 +93,12 @@ _Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 
 	return {
 		props: {
-			bgcolor: process.env.bgcolor || "#EDEEC0",
-			textcolor: process.env.textcolor || "#433E0E",
-			accentcolor: process.env.accentcolor || "#553555",
+			bgcolor: process.env.bgcolor || false,
+			textcolor: process.env.textcolor || false,
+			accentcolor: process.env.accentcolor || false,
 			mdx: process.env.mdx || defaultMdx,
 			forceHttps: process.env.forceHttps || false,
 			appData,
-		}
+		} as Props
 	}
 }
