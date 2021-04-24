@@ -60,11 +60,10 @@ module.exports = {
 			test: /\.(woff|woff2|eot|ttf)$/,
 			loader: 'file-loader',
 			options: {
-				outputPath: 'static/font/'
+				outputPath: 'static/font/',
+				publicPath: '/_next/static/font/'
 			}
 		});
-
-		config.output.publicPath = '';
 
 		return config;
 	},
