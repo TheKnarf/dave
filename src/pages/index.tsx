@@ -9,45 +9,48 @@ import { themeVars } from '../styles/index.css';
 import 'inter-ui/Inter (web)/inter.css';
 import { createInlineTheme } from '@vanilla-extract/dynamic';
 
+interface Colors {
+	background?: string;
+	text?: string;
+	accent?: string;
+};
+
 interface Props {
-	bgcolor: string | false;
-	textcolor: string | false;
-	accentcolor: string | false;
+	colors: Colors;
 	mdx: string;
 	appData: AppProps[];
 	forceHttps: string | boolean;
 };
 
-const makeStyle = (bgcolor: string | false, textcolor: string | false, accentcolor: string | false) => {
-	const color : any = {};
-
-	if(bgcolor) color.background = bgcolor;
-	if(textcolor) color.text = textcolor;
-	if(accentcolor) color.accent = accentcolor;
-
-	const customTheme = createInlineTheme(themeVars, { color });
-
-	return `:root { ${customTheme.toString()} }`;
-};
-
-const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData, forceHttps }) => {
-	const httpStatus = useForceHttps(forceHttps);
-
+const Style : React.FC<{ colors : Colors }> = ({ colors }) => {
 	const style = useMemo(() => {
 		if(typeof window !== 'undefined') {
 			const match = window.location.hash.match(/^\#([0-9a-f]{3,6})\-([0-9a-f]{3,6})\-([0-9a-f]{3,6})$/i);
 			if(match !== null) {
-				return makeStyle(
-					'#' + match[1],
-					'#' + match[2],
-					'#' + match[3],
-				);
+				const color = {
+					background: '#' + match[1],
+					text: '#' + match[2],
+					accent: '#' + match[3],
+				};
+
+				return createInlineTheme(themeVars, { color });
 			}
 		}
 
-		return makeStyle(bgcolor, textcolor, accentcolor);
+		return createInlineTheme(themeVars, { color: colors as any });
 	}, [ (typeof window == 'undefined' ? { location: { hash: '' }} : window ).location.hash ])
 
+	return (
+		<style>
+{`:root {
+	${style}
+}`}
+		</style>
+	);
+}
+
+const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
+	const httpStatus = useForceHttps(forceHttps);
 	const apps = useMemo(() => {
 		return (appData||[]).map(({
 			relativeSubdomain,
@@ -67,7 +70,7 @@ const Home : React.FC<Props> = ({ bgcolor, textcolor, accentcolor, mdx, appData,
 	}, [appData, httpStatus]);
 
 	return <>
-		<style>{style}</style>
+		<Style colors={colors} />
 		<article>
 			<MDX components={{ Grid, App }} scope={{ apps }}>{mdx}</MDX>
 		</article>
@@ -91,11 +94,14 @@ _Welcome to your \`dave\` dashboard. You'll find relevant apps underneath._
 </Grid>
 `;
 
+	const colors : Colors = {};
+	if(process.env.bgcolor) colors.background = process.env.bgcolor;
+	if(process.env.textcolor) colors.text = process.env.bgcolor;
+	if(process.env.accentcolor) colors.accent = process.env.bgcolor;
+
 	return {
 		props: {
-			bgcolor: process.env.bgcolor || false,
-			textcolor: process.env.textcolor || false,
-			accentcolor: process.env.accentcolor || false,
+			colors,
 			mdx: process.env.mdx || defaultMdx,
 			forceHttps: process.env.forceHttps || false,
 			appData,
