@@ -1,9 +1,19 @@
 import React from 'react';
 import App, { AppProps } from '../app';
-import { className } from './style.css';
+import { themeClass, themeVars, className } from './style.css';
+import { createInlineTheme } from '@vanilla-extract/dynamic';
 
-const Grid : React.FC = ({ children }) => {
-	return <div className={className}>
+interface Props {
+	/* setting the min width for columns */
+	minWidth?: string;
+}
+
+const Grid : React.FC<Props> = ({ children, minWidth='330px' }) => {
+	const customTheme = createInlineTheme(themeVars, {
+		minWidth,
+	});
+
+	return <div className={className} style={customTheme}>
 	{
 		children	
 	}
