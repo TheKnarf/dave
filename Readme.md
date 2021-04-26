@@ -48,5 +48,5 @@ Label|Default|Description|Note
 `dave.name`|Container name|Name to show on the dashboard.|
 `dave.url`||Url to link to.|Set either `dave.url` or `dave.relativeSubdomain` but not both.
 `dave.relativeSubdomain`||Url to link to, relative to the domain that the dashboard is served from.|Set either `dave.url` or `dave.relativeSubdomain` but not both.
-`dave.icon`|Some containers have default icon|The name of an icon, taken from Iconify.|
+`dave.icon`||The name of an icon, taken from [Iconify](https://iconify.design/).|Some containers have default icon
 
