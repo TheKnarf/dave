@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { GetServerSideProps } from 'next'
 import MDX from '@mdx-js/runtime';
-import App from '../components/app';
+import App, { AppProps as IApp } from '../components/app';
 import Grid from '../components/grid';
 import useForceHttps, { ForceHttpsStatus, replaceUrlWithHttps } from '../force-https';
 import { getContainersWithLabels, AppProps } from '../docker';
@@ -51,13 +51,15 @@ const Style : React.FC<{ colors : Colors }> = ({ colors }) => {
 
 const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
 	const httpStatus = useForceHttps(forceHttps);
-	const apps = useMemo(() => {
-		return (appData||[]).map(({
+	let apps : IApp[] = [];
+
+	if(typeof window !== 'undefined') {
+		apps = (appData||[]).map(({
 			relativeSubdomain,
 			url,
 			...app
 		}) => {
-			const href = (relativeSubdomain && typeof window !== 'undefined')
+			const href = relativeSubdomain
 				? `//${relativeSubdomain}.${window.location.host}/`
 				: (url || "");
 
@@ -67,7 +69,7 @@ const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
 
 			return { ...app, href };
 		});
-	}, [appData, httpStatus]);
+	}
 
 	return <>
 		<Style colors={colors} />
