@@ -8,6 +8,8 @@ import { getContainersWithLabels, AppProps } from '../docker';
 import { themeVars } from '../styles/index.css';
 import 'inter-ui/Inter (web)/inter.css';
 import { createInlineTheme } from '@vanilla-extract/dynamic';
+import CMDK from '../cmdk';
+import { Command } from 'cmdk';
 
 interface Colors {
 	background?: string;
@@ -71,7 +73,17 @@ const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
 		});
 	}
 
+	const gotoApp = (app) => {
+		window.location.href = app.href;
+	};
+
 	return <>
+		<CMDK>
+		{ (apps || []).map((app) => (
+			<Command.Item key={app.id} onSelect={() => gotoApp(app)}>{ app.name }</Command.Item>
+		)) }
+		</CMDK>
+
 		<Style colors={colors} />
 		<article>
 			<MDX components={{ Grid, App }} scope={{ apps }}>{mdx}</MDX>
