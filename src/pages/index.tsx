@@ -4,7 +4,7 @@ import MDX from '@mdx-js/runtime';
 import App, { AppProps as IApp } from '../components/app';
 import Grid from '../components/grid';
 import useForceHttps, { ForceHttpsStatus, replaceUrlWithHttps } from '../force-https';
-import { getContainersWithLabels, AppProps } from '../docker';
+import { getApps, AppProps } from '../providers';
 import { themeVars } from '../styles/index.css';
 import 'inter-ui/Inter (web)/inter.css';
 import { createInlineTheme } from '@vanilla-extract/dynamic';
@@ -73,7 +73,7 @@ const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
 		});
 	}
 
-	const gotoApp = (app) => {
+	const gotoApp = (app: IApp) => {
 		window.location.href = app.href;
 	};
 
@@ -94,7 +94,7 @@ const Home : React.FC<Props> = ({ colors,  mdx, appData, forceHttps }) => {
 export default Home;
 
 export const getServerSideProps : GetServerSideProps = async (context) => {
-	const appData = await getContainersWithLabels();
+	const appData = await getApps();
 
 	const defaultMdx = `
 # Dave

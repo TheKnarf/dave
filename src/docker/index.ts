@@ -1,5 +1,6 @@
 import fallbackIcon from '../fallback-icon';
 import { Docker } from 'node-docker-api';
+import type { AppProps } from '../providers';
 
 const fetch = (docker : Docker, path : string, callOverride = {}) => {
 	const call = {
@@ -51,14 +52,7 @@ interface Container {
 	Status: string;
 };
 
-export interface AppProps {
-	id: string;
-	icon: string;
-	name: string;
-	status: string;
-	url?: string;
-	relativeSubdomain?: string;
-};
+// AppProps is now exported from '../providers'
 
 const processContainer = (containers : Container[]) : AppProps[] => {
 	return containers
