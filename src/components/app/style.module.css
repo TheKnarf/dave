@@ -1,0 +1,36 @@
+.container {
+	display: flex;
+}
+
+.container:hover {
+	text-decoration: underline;
+}
+
+.link {
+	display: flex;
+	flex-direction: row;
+	text-decoration: none;
+	color: inherit;
+}
+
+.url {
+	color: var(--color-accent);
+	font-size: 0.8em;
+	font-style: italic;
+}
+
+.status {
+	font-size: 0.8em;
+	font-style: italic;
+}
+
+.iconWrapper {
+	height: 3em;
+	width: 3em;
+	margin-right: 1em;
+}
+
+.icon {
+	height: 100%;
+	width: 100%;
+}
