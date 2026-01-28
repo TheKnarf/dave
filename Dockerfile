@@ -7,7 +7,7 @@ COPY package.json yarn.lock /app/
 RUN yarn --frozen-lockfile
 
 COPY . /app/
-RUN NEXT_TELEMETRY_DISABLED=1 yarn next build
+RUN NODE_OPTIONS=--openssl-legacy-provider NEXT_TELEMETRY_DISABLED=1 yarn next build
 
 
 # Stage 2 - Running the app
