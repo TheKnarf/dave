@@ -4,7 +4,7 @@ FROM node:14 AS builder
 WORKDIR /app
 
 COPY package.json yarn.lock /app/
-RUN yarn --frozen-lockfile
+RUN yarn --frozen-lockfile --ignore-engines
 
 COPY . /app/
 RUN NEXT_TELEMETRY_DISABLED=1 yarn next build
