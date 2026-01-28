@@ -1,17 +1,17 @@
 # Stage 1 - Build
-FROM node:14 AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
 
 COPY package.json yarn.lock /app/
-RUN yarn --frozen-lockfile --ignore-engines
+RUN yarn --frozen-lockfile
 
 COPY . /app/
 RUN NEXT_TELEMETRY_DISABLED=1 yarn next build
 
 
 # Stage 2 - Running the app
-FROM node:14-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 ENV NODE_ENV=production
