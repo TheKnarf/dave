@@ -78,9 +78,14 @@ const processContainer = (containers : Container[]) : AppProps[] => {
 		.sort((first, second) => first.name.localeCompare(second.name));
 };
 
-export const getContainersWithLabels = async () => {
-	const docker = new Docker({ socketPath: '/var/run/docker.sock' });
-	const containers = await fetch(docker, '/containers/json') as Container[];
-
-	return processContainer(containers);
+export const getContainersWithLabels = async (): Promise<AppProps[]> => {
+	try {
+		const docker = new Docker({ socketPath: '/var/run/docker.sock' });
+		const containers = await fetch(docker, '/containers/json') as Container[];
+		return processContainer(containers);
+	} catch (error) {
+		// Docker socket not available - return empty list
+		console.warn('Docker socket not available, returning empty app list:', error);
+		return [];
+	}
 };

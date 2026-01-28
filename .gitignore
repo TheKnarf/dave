@@ -211,3 +211,8 @@ $RECYCLE.BIN/
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,node,yarn
+
+# Playwright
+playwright-report/
+playwright/.cache/
+test-results/

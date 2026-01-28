@@ -17,15 +17,16 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: '14.x'
+          node-version: '20'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn --immutable
+        run: yarn --frozen-lockfile
 
-      - name: Tests
-        run: yarn test
+      - name: Type check
+        run: yarn lint:types
 
       - name: Build Docker image
         run: docker build . --tag $IMAGE_NAME

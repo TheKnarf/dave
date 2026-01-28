@@ -1,24 +1,22 @@
 # Stage 1 - Build
-FROM node:14 AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
 
 COPY package.json yarn.lock /app/
-RUN yarn --frosen-lockfile
+RUN yarn --frozen-lockfile
 
 COPY . /app/
-RUN NEXT_TELEMETRY_DISABLED=1 yarn next build
+RUN NODE_OPTIONS=--openssl-legacy-provider NEXT_TELEMETRY_DISABLED=1 yarn next build
 
 
 # Stage 2 - Running the app
-FROM node:14-alpine
+FROM node:20-alpine
 
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
-# You only need to copy next.config.js if you are NOT using the default configuration
- COPY --from=builder /app/next.config.js ./
-#COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json

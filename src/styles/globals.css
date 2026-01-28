@@ -1,0 +1,43 @@
+:root {
+	--color-background: #EDEEC0;
+	--color-text: #433E0E;
+	--color-accent: #553555;
+}
+
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-family: serif;
+	font-size: max(2vh, 16px);
+	margin: 0;
+	padding: 0;
+}
+
+article {
+	margin-left: 15vw;
+	margin-right: 20vw;
+	margin-top: min(15vh, 15vw);
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+	font-family: 'Inter', sans-serif;
+	font-weight: 400;
+}
+
+article h1 {
+	font-size: 1.9em;
+}
+
+article h2 {
+	font-size: 1.4em;
+}
